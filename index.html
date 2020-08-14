@@ -3,10 +3,24 @@
   <head>
     <title>osc.js Web Sockets</title>
     <meta charset="utf-8"/>
+
     <script src="https://cdn.jsdelivr.net/npm/osc-js@2.1.0/lib/osc.min.js"></script>
+
+    <script type="text/javascript">
+      const osc = new OSC({
+        plugin: new OSC.DatagramPlugin({ send: { port: 57120, host: '127.0.0.1' } })
+      });
+      osc.open(); // connect by default to ws://localhost:8080
+
+      document.getElementById('send').addEventListener('click', () => {
+        var message = new OSC.Message('/test/random', Math.random());
+        osc.send(message);
+      });
+    </script>
+
   </head>
 
   <body>
-    osc-test
+  <button id="send">Send Message</button>
   </body>
 </html>
